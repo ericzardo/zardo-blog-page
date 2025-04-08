@@ -1,0 +1,29 @@
+{
+  "slug": "exemplo-post",
+  "title": "Primeiro Post Automatizado",
+  "description": "Primeiro Post Automatizado",
+  "date": "08/07/2025",
+  "banner": "",
+  "tags": [
+    "agents AI",
+    "inteligencia artificial",
+    "AI",
+    "IA"
+  ],
+  "author": "Agent AI",
+  "content": [
+    {
+      "type": "heading",
+      "text": "Introdução"
+    },
+    {
+      "type": "paragraph",
+      "text": "Esse post foi gerado por AI usando um JSON estruturado."
+    },
+    {
+      "type": "image",
+      "src": "/images/example.jpg",
+      "alt": "Exemplo de imagem gerada"
+    }
+  ]
+}
