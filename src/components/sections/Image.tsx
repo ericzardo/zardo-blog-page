@@ -1,4 +1,11 @@
+"use client";
+
 import Image from "next/image";
+import { useRef, useEffect } from "react";
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface ImageSectionProps {
   src: string;
@@ -6,11 +13,29 @@ interface ImageSectionProps {
 }
 
 const ImageSection = ({ src, alt }: ImageSectionProps) => {
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        scale: 1.08,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: imageRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+      });
+    }
+  }, [])
+
   return (
     <section className="py-20 bg-brand-offwhite">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="relative rounded-3xl overflow-hidden shadow-lg will-change-transform">
           <Image
+            ref={imageRef}
             src={src}
             alt={alt}
             width={1920}

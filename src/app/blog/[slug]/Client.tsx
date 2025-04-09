@@ -15,7 +15,7 @@ export default function Client({ slug }: { slug: string }) {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const res = await fetch(`/api/posts/${slug}`)
+      const res = await fetch(`/api/posts?slug=${slug}`);
       if (!res.ok) throw new Error('Failed to fetch post')
       setPost(await res.json())
     }
@@ -31,10 +31,11 @@ export default function Client({ slug }: { slug: string }) {
       <Header 
         navItems={NAV_ITEMS.map(nav => ({
           ...nav,
-          onClick: () => scrollToSection({ sectionId: nav.href, offset: 80, duration: 800 }),
+          onClick: () => window.location.href = 'https://zardo.dev',
         }))}
         ctaLabel="Get Started"
-        ctaOnClick={() => scrollToSection({ sectionId: "contact", offset: 80, duration: 800 })}
+        ctaOnClick={() => window.location.href = 'https://zardo.dev#contact'}
+        onLogoClick={() => window.location.href = 'https://zardo.dev'}
       />
       <PostRenderer {...post} />
       <Slogan

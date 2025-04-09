@@ -3,7 +3,7 @@
   "title": "Primeiro Post Automatizado",
   "description": "Primeiro Post Automatizado",
   "date": "08/07/2025",
-  "banner": "",
+  "banner": "/placeholder.jpg",
   "tags": [
     "agents AI",
     "inteligencia artificial",
@@ -18,12 +18,49 @@
     },
     {
       "type": "paragraph",
-      "text": "Esse post foi gerado por AI usando um JSON estruturado."
+      "text": "Esse post foi gerado por uma inteligência artificial utilizando um modelo estruturado de JSON para representar seções e conteúdos. É uma demonstração de como podemos automatizar a produção de conteúdo com base em dados simples."
+    },
+    {
+      "type": "paragraph",
+      "text": "Esse post foi gerado por uma inteligência artificial utilizando um modelo estruturado de JSON para representar seções e conteúdos. É uma demonstração de como podemos automatizar a produção de conteúdo com base em dados simples."
+    },
+    {
+      "type": "paragraph",
+      "text": "Esse post foi gerado por uma inteligência artificial utilizando um modelo estruturado de JSON para representar seções e conteúdos. É uma demonstração de como podemos automatizar a produção de conteúdo com base em dados simples."
     },
     {
       "type": "image",
-      "src": "/images/example.jpg",
-      "alt": "Exemplo de imagem gerada"
+      "src": "/placeholder.jpg",
+      "alt": "Imagem de introdução sobre inteligência artificial"
+    },
+    {
+      "type": "heading",
+      "text": "Por que usar IA para gerar conteúdo?"
+    },
+    {
+      "type": "paragraph",
+      "text": "Automatizar a criação de conteúdo com IA economiza tempo, padroniza a comunicação e permite escalar a produção de forma mais eficiente. Com a estrutura certa, é possível gerar textos coerentes e relevantes para diversos contextos."
+    },
+    {
+      "type": "image",
+      "src": "/placeholder.jpg",
+      "alt": "Representação da IA auxiliando na escrita"
+    },
+    {
+      "type": "heading",
+      "text": "Como funciona esse processo"
+    },
+    {
+      "type": "paragraph",
+      "text": "A IA recebe um conjunto de dados estruturados contendo título, descrição, tags e conteúdo inicial. A partir disso, ela compõe seções com títulos, parágrafos e imagens, criando um post com boa legibilidade e estrutura lógica."
+    },
+    {
+      "type": "heading",
+      "text": "Conclusão"
+    },
+    {
+      "type": "paragraph",
+      "text": "Esse é apenas um exemplo simples, mas que demonstra o poder de integração entre modelos de linguagem e aplicações modernas como blogs. A automação com IA abre espaço para experiências personalizadas, criativas e escaláveis."
     }
   ]
 }

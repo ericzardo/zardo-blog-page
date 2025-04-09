@@ -4,12 +4,13 @@ import { Content } from "@/types/post";
 
 interface SectionProps {
   blocks: Content[];
+  index: number;
 }
 
-const Section = ({ blocks }: SectionProps) => {
+const Section = ({ blocks, index }: SectionProps) => {
   return (
     <section className="relative py-20 bg-brand-offwhite">
-      <PatternBackground />
+      {(index === 0) && <PatternBackground />}
       <div className="container mx-auto px-4 max-w-4xl">
       {blocks.map((block, index) => {
           switch (block.type) {
@@ -27,7 +28,7 @@ const Section = ({ blocks }: SectionProps) => {
               return (
                 <p
                   key={index}
-                  className="text-lg text-brand-navy/80 leading-relaxed"
+                  className="text-lg text-brand-navy/80 leading-relaxed pb-4 pt-2"
                 >
                   {block.text}
                 </p>

@@ -1,7 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface HeroProps {
   title: string;
@@ -13,7 +17,23 @@ interface HeroProps {
 }
 
 const Hero = ({ title, description, banner, tags, date, author }: HeroProps) => {
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        scale: 1.08,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: imageRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.5,
+        },
+      });
+    }
+  }, [])
+
 
   return (
     <section 
@@ -59,10 +79,10 @@ const Hero = ({ title, description, banner, tags, date, author }: HeroProps) => 
               ref={imageRef}
               src={banner}
               alt={`${title} - Project showcase banner featuring ${tags.join(', ')} technologies.`}
-              className="object-cover w-full h-full transition-transform will-change-transform"
+              className="object-cover w-full h-full max-h-[700px] transition-transform will-change-transform"
               loading="lazy"
               width={2000}
-              height={1000}
+              height={100}
             />
           )}
         </div>

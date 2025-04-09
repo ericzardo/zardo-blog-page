@@ -32,7 +32,7 @@ export function PostRenderer({ title, banner, description, date, content, tags, 
           );
         }
 
-        return <Section key={index} blocks={blocks} />;
+        return <Section key={index} blocks={blocks} index={index} />;
       })}
     </article>
   )
