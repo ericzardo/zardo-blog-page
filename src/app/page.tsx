@@ -1,7 +1,8 @@
 "use client";
 
+import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NotFoundScreen, LoadingScreen } from "@zardo/ui-kit/feedback";
+import { LoadingScreen } from "@zardo/ui-kit/feedback";
 
 export default function Home() {
   const [isClient, setIsClient ] = useState<boolean>(false);
@@ -12,5 +13,5 @@ export default function Home() {
 
   if (!isClient) return <LoadingScreen />
 
-  return <NotFoundScreen backHref="https://zardo.dev" />;
+  return notFound();
 }

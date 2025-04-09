@@ -10,25 +10,22 @@ import { PostRenderer } from '@/components/PostRenderer'
 import { NAV_ITEMS, SOCIAL_LINKS } from '@/constants/nav'
 
 export default function Client({ slug }: { slug: string }) {
-  const [isClient, setIsClient ] = useState<boolean>(false);
   const [post, setPost] = useState<Post | null>(null)
   const scrollToSection = useScrollToSection()
 
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
   useEffect(() => {
     const fetchPost = async () => {
-      const res = await fetch(`/api/posts?slug=${slug}`);
-      if (!res.ok) throw new Error('Failed to fetch post')
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/posts?slug=${slug}`);;
+      if (!res.ok) {
+        setPost(null);
+        return
+      };
       setPost(await res.json())
     }
     fetchPost()
   }, [slug])
 
-  if (!post || !isClient) {
+  if (!post) {
     return <LoadingScreen message="Loading post..." />
   }
 
