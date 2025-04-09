@@ -5,10 +5,9 @@ export function groupIntoSections(blocks: Content[]) {
   let currentSection: Content[] = [];
 
   for (const block of blocks) {
-    const isHeading = block.type === 'heading';
-    const isImage = block.type === 'image';
+    const isNewSectionStart = block.type === "heading" || block.type === "image";
 
-    if ((isHeading || isImage) && currentSection.length > 0) {
+    if (isNewSectionStart && currentSection.length > 0) {
       sections.push(currentSection);
       currentSection = [block];
     } else {

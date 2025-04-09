@@ -5,13 +5,19 @@ import { Post } from '@/types/post'
 import { useScrollToSection } from '@/hooks/useScrollToSection'
 
 import { Header, Slogan, Footer } from '@zardo/ui-kit/layout'
-import { LoadingScreen } from '@zardo/ui-kit/components'
+import { LoadingScreen } from '@zardo/ui-kit/feedback'
 import { PostRenderer } from '@/components/PostRenderer'
 import { NAV_ITEMS, SOCIAL_LINKS } from '@/constants/nav'
 
 export default function Client({ slug }: { slug: string }) {
+  const [isClient, setIsClient ] = useState<boolean>(false);
   const [post, setPost] = useState<Post | null>(null)
   const scrollToSection = useScrollToSection()
+
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -22,7 +28,7 @@ export default function Client({ slug }: { slug: string }) {
     fetchPost()
   }, [slug])
 
-  if (!post) {
+  if (!post || !isClient) {
     return <LoadingScreen message="Loading post..." />
   }
 

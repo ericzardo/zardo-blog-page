@@ -24,6 +24,13 @@ const Section = ({ blocks, index }: SectionProps) => {
                 </h2>
               );
 
+            case 'subheading':
+              return (
+                <h3 key={index} className="text-xl font-semibold text-brand-navy">
+                  {block.text}
+                </h3>
+              );
+
             case 'paragraph':
               return (
                 <p
@@ -32,6 +39,15 @@ const Section = ({ blocks, index }: SectionProps) => {
                 >
                   {block.text}
                 </p>
+              );
+
+            case 'topics':
+              return (
+                <ul key={index} className="list-disc list-inside space-y-2 text-brand-navy/80 pl-4">
+                  {block.items.map((item: string, i: number) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
               );
             default:
               return null;

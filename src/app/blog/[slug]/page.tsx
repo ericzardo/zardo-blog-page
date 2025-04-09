@@ -1,27 +1,34 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Client from "./Client";
 import { getPostBySlug } from "@/lib/posts";
-import { metadata as buildMetadata } from "@/lib/metadata";
+import { metadata } from "@/lib/metadata";
 
-type Params = {
-  params: {
-    slug: string;
-  };
-};
+export const dynamic = 'force-dynamic';
 
-export async function generateMetadata(context: Params): Promise<Metadata> {
+export async function generateStaticParams() {
+  return []; 
+}
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await params;
   try {
-    const post = await getPostBySlug(context.params.slug);
+    const post = await getPostBySlug(slug);
     if (!post) notFound();
-    return buildMetadata(post);
-  } catch (error) {
+    return metadata(post);
+  } catch {
     notFound();
   }
 }
 
-export default async function Page(context: Params) {
-  const slug = context.params.slug;
+
+
+export default async function Page(
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params;
   return <Client slug={slug} />;
 }
