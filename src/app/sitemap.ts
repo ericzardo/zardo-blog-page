@@ -6,9 +6,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://zardo.dev/blog'
 
   const slugs = await getAllSlugs()
-  const posts: Post[] = await Promise.all(
+  const results = await Promise.all(
     slugs.map(async (slug: string) => await getPostBySlug(slug))
   )
+
+  const posts: Post[] = results.filter((post): post is Post => post !== null)
 
   const staticRoutes = [
     '',
