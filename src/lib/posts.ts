@@ -8,6 +8,9 @@ const postsDirectory = path.join(process.cwd(), 'src/data')
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   const filePath = path.join(postsDirectory, `${slug}.json`);
 
+  console.log("Caminho base:", process.cwd()); // Verifique o diretório de trabalho
+  console.log("Caminho do arquivo:", filePath)
+
   try {
     const file = await fs.readFile(filePath, "utf-8");
     return JSON.parse(file);

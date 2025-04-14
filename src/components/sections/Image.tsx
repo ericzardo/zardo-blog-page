@@ -36,7 +36,7 @@ const ImageSection = ({ src, alt }: ImageSectionProps) => {
         <div className="relative rounded-3xl overflow-hidden shadow-lg will-change-transform">
           <Image
             ref={imageRef}
-            src={src}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${src}`}
             alt={alt}
             width={1920}
             height={1080}

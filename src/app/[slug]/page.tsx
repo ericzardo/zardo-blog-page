@@ -7,10 +7,6 @@ import { metadata } from "@/lib/metadata";
 
 export const dynamic = 'force-dynamic';
 
-export async function generateStaticParams() {
-  return []; 
-}
-
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {

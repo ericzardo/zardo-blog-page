@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     ],
     shortcut: [Favicon],
   },
-  manifest: '/manifest.json',
+  manifest: '/blog/manifest.json',
   robots: {
     index: true,
     follow: true,

@@ -77,7 +77,7 @@ const Hero = ({ title, description, banner, tags, date, author }: HeroProps) => 
           {banner && (
             <Image
               ref={imageRef}
-              src={banner}
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${banner}`}
               alt={`${title} - Project showcase banner featuring ${tags.join(', ')} technologies.`}
               className="object-cover w-full h-full max-h-[700px] transition-transform will-change-transform"
               loading="lazy"
