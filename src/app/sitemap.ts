@@ -26,12 +26,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 1,
   }))
 
-  const blogRoutes = posts.map((post) => ({
-    url: `${baseUrl}${blogBasePath}/${post.title}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  const blogRoutes = posts.map((post) => {
+    const isValidDate = post.date && !isNaN(new Date(post.date).getTime());
+  
+    return {
+      url: `${baseUrl}${blogBasePath}/${post.title}`,
+      lastModified: isValidDate ? new Date(post.date) : new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    };
+  });
+  
 
   return [...staticRoutes, ...blogRoutes]
 }
