@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { switchLanguage } from '@/lib/translate';
 import { useScrollToSection } from '@/hooks/useScrollToSection';
@@ -32,24 +32,21 @@ export default function Client({ slug }: { slug: string }) {
     icon: iconMap[item.platform],
   }));
 
-const pathname = usePathname();
-const router = useRouter();
+  const pathname = usePathname();
 
-const isBlogPage = pathname.startsWith('/blog');
+  const isBlogPage = pathname.startsWith('/blog');
 
   const headerNavItems = NAV_ITEMS.map((nav) => {
     if (isBlogPage) {
       return {
         ...nav,
-        onClick: () => {
-          router.push(`/#${nav.href}`);
-        }
-      }
+        href: `https://zardo.dev/#${nav.href}`
+      };
     } else {
       return {
         ...nav,
         onClick: () => scrollToSection({ sectionId: nav.href, offset: 80, duration: 800 })
-      }
+      };
     }
   });
 
