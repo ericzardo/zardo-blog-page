@@ -1,0 +1,145 @@
+{
+  "slug": "example-post",
+  "title": "First Automated Post",
+  "description": "First Automated Post",
+  "date": "08/07/2025",
+  "banner": "/placeholder.jpg",
+  "tags": [
+    "agents AI",
+    "artificial intelligence",
+    "AI"
+  ],
+  "author": "Agent AI",
+  "content": [
+    {
+      "type": "heading",
+      "text": "Introduction to Modern Web Development"
+    },
+    {
+      "type": "paragraph",
+      "text": "Web development has undergone a revolution in recent years, with new technologies and tools emerging all the time."
+    },
+    {
+      "type": "paragraph",
+      "text": "Frameworks like React, Vue, and Svelte have made building interfaces more dynamic and efficient, while build tools like Vite and esbuild have brought more speed to development."
+    },
+    {
+      "type": "paragraph",
+      "text": "In this article, we explore best practices, modern tools, and how to structure your project for scaling with quality."
+    },
+    {
+      "type": "image",
+      "src": "/placeholder.jpg",
+      "alt": "Placeholder image"
+    },
+    {
+      "type": "heading",
+      "text": "Choosing the Ideal Stack"
+    },
+    {
+      "type": "subheading",
+      "text": "Criteria for choosing a stack"
+    },
+    {
+      "type": "paragraph",
+      "text": "Before starting a project, it is essential to choose a technology stack based on business needs, delivery time, and the available team."
+    },
+    {
+      "type": "topics",
+      "items": [
+        "Ease of maintenance",
+        "Learning curve",
+        "Community support",
+        "Performance"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "The right choice can accelerate development and reduce long-term costs."
+    },
+    {
+      "type": "image",
+      "src": "/placeholder.jpg",
+      "alt": "Placeholder image"
+    },
+    {
+      "type": "heading",
+      "text": "Best Practices with Components"
+    },
+    {
+      "type": "paragraph",
+      "text": "Componentization is one of the main advantages of modern libraries like React. It allows for creating reusable and easy-to-maintain interfaces."
+    },
+    {
+      "type": "paragraph",
+      "text": "Keep your components small, with a single responsibility and well-named. Always separate presentation logic whenever possible."
+    },
+    {
+      "type": "subheading",
+      "text": "Recommended patterns"
+    },
+    {
+      "type": "topics",
+      "items": [
+        "Atomic Design",
+        "Custom Hooks",
+        "Domain separation"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "These patterns help keep your code clean and predictable in larger teams."
+    },
+    {
+      "type": "image",
+      "src": "/placeholder.jpg",
+      "alt": "Placeholder image"
+    },
+    {
+      "type": "heading",
+      "text": "Performance and Accessibility"
+    },
+    {
+      "type": "paragraph",
+      "text": "Speed and accessibility are fundamental pillars for a good user experience. A slow or inaccessible site loses its audience quickly."
+    },
+    {
+      "type": "subheading",
+      "text": "What to prioritize"
+    },
+    {
+      "type": "topics",
+      "items": [
+        "Lazy loading images",
+        "Asset compression",
+        "Use of semantic HTML",
+        "Screen reader compatibility"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Use tools like Lighthouse and axe-core to test and continuously improve these aspects."
+    },
+    {
+      "type": "image",
+      "src": "/placeholder.jpg",
+      "alt": "Placeholder image"
+    },
+    {
+      "type": "heading",
+      "text": "Conclusion and Next Steps"
+    },
+    {
+      "type": "paragraph",
+      "text": "The web ecosystem is constantly evolving. Keeping up with trends and best practices is an essential part of being a modern developer."
+    },
+    {
+      "type": "paragraph",
+      "text": "Invest time in learning new tools, testing different approaches, and contributing to the community. This strengthens your career and the ecosystem as a whole."
+    },
+    {
+      "type": "paragraph",
+      "text": "If you enjoyed this article, consider sharing it with colleagues and applying the ideas to your future projects."
+    }
+  ]
+}

@@ -14,9 +14,11 @@ interface HeroProps {
   tags: string[];
   date: string;
   author: string;
+  authorLabel: string;
+  dateLabel: string;
 }
 
-const Hero = ({ title, description, banner, tags, date, author }: HeroProps) => {
+const Hero = ({ title, description, banner, tags, date, author, authorLabel, dateLabel }: HeroProps) => {
   const imageRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
@@ -57,14 +59,14 @@ const Hero = ({ title, description, banner, tags, date, author }: HeroProps) => 
           <div className="flex flex-col justify-end gap-6 lg:w-1/3 w-full">
             <div className="flex flex-col md:flex-row flex-wrap gap-4 w-full">
               <div className="flex flex-col flex-1 gap-2 p-4 rounded-lg bg-brand-navy/50 border border-brand-lavender/10">
-                <p className="text-sm text-brand-lavender/85">Date</p>
+                <p className="text-sm text-brand-lavender/85">{dateLabel}</p>
                 <p className="text-brand-lavender font-medium">
                   {date}
                 </p>
               </div>
 
               <div className="flex flex-col flex-1 gap-2 p-4 rounded-lg bg-brand-navy/50 border border-brand-lavender/10">
-                <p className="text-sm text-brand-lavender/85">Author</p>
+                <p className="text-sm text-brand-lavender/85">{authorLabel}</p>
                 <p className="text-brand-lavender font-medium">
                   {author}
                 </p>

@@ -2,12 +2,16 @@ import { MetadataRoute } from 'next'
 import { getAllSlugs, getPostBySlug } from '@/lib/posts'
 import { Post } from '@/types/post'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://zardo.dev/blog'
+const DEFAULT_LOCALE = 'en'
 
-  const slugs = await getAllSlugs()
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const baseUrl = 'https://zardo.dev'
+  const blogBasePath = '/blog'
+
+  const slugs = await getAllSlugs(DEFAULT_LOCALE)
+
   const results = await Promise.all(
-    slugs.map(async (slug: string) => await getPostBySlug(slug))
+    slugs.map((slug) => getPostBySlug(slug, DEFAULT_LOCALE))
   )
 
   const posts: Post[] = results.filter((post): post is Post => post !== null)
@@ -16,14 +20,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '',
     '/blog',
   ].map((route) => ({
-    url: `https://zardo.dev${route}`,
+    url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 1,
   }))
 
   const blogRoutes = posts.map((post) => ({
-    url: `${baseUrl}/${post.title}`,
+    url: `${baseUrl}${blogBasePath}/${post.title}`,
     lastModified: new Date(post.date),
     changeFrequency: 'weekly' as const,
     priority: 0.8,

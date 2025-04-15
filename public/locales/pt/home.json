@@ -1,0 +1,45 @@
+{
+  "nav": [
+    {
+      "label": "Início",
+      "href": "hero"
+    },
+    {
+      "label": "Projetos",
+      "href": "projects"
+    },
+    {
+      "label": "Sobre",
+      "href": "about"
+    },
+    {
+      "label": "Contato",
+      "href": "contact"
+    }
+  ],
+  "cta": "Começar agora",
+  "slogan": {
+    "title": "Soluções Digitais Inovadoras",
+    "description": "Combinamos criatividade e tecnologia de ponta para criar experiências únicas que transformam o seu negócio."
+  },
+  "social": [
+    {
+      "platform": "instagram",
+      "url": "https://www.instagram.com/zardo.dev",
+      "label": "Perfil da Zardo no Instagram"
+    },
+    {
+      "platform": "linkedin",
+      "url": "https://www.linkedin.com/company/zardo-dev",
+      "label": "Perfil da Zardo no LinkedIn"
+    }
+  ],
+  "footer": {
+    "backToTop": "Voltar ao topo"
+  },
+  "hero": {
+    "authorLabel": "Autor",
+    "dateLabel": "Data"
+  },
+  "loading": "Carregando post..."
+}

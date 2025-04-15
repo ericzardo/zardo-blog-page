@@ -5,7 +5,12 @@ import ImageSection from "./sections/Image";
 import { Post } from "@/types/post"
 import { groupIntoSections } from "@/lib/sections";
 
-export function PostRenderer({ title, banner, description, date, content, tags, author }: Post) {
+interface PostRenderer extends Post {
+  authorLabel: string;
+  dateLabel: string;
+}
+
+export function PostRenderer({ title, banner, description, date, content, tags, author, authorLabel, dateLabel }: PostRenderer) {
   const sections = groupIntoSections(content);
 
   return (
@@ -17,6 +22,8 @@ export function PostRenderer({ title, banner, description, date, content, tags, 
         tags={tags}
         banner={banner}
         author={author}
+        authorLabel={authorLabel}
+        dateLabel={dateLabel}
       />
 
       {sections.map((blocks, index) => {
