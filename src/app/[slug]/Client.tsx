@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { switchLanguage } from '@/lib/translate';
 import { useScrollToSection } from '@/hooks/useScrollToSection';
@@ -30,6 +31,27 @@ export default function Client({ slug }: { slug: string }) {
     ...item,
     icon: iconMap[item.platform],
   }));
+
+const pathname = usePathname();
+const router = useRouter();
+
+const isBlogPage = pathname.startsWith('/blog');
+
+  const headerNavItems = NAV_ITEMS.map((nav) => {
+    if (isBlogPage) {
+      return {
+        ...nav,
+        onClick: () => {
+          router.push(`/#${nav.href}`);
+        }
+      }
+    } else {
+      return {
+        ...nav,
+        onClick: () => scrollToSection({ sectionId: nav.href, offset: 80, duration: 800 })
+      }
+    }
+  });
 
   useEffect(() => {
     try {
@@ -67,10 +89,7 @@ export default function Client({ slug }: { slug: string }) {
   return (
     <main className="min-h-screen">
       <Header 
-        navItems={NAV_ITEMS.map(nav => ({
-          ...nav,
-          onClick: () => scrollToSection({ sectionId: nav.href, offset: 80, duration: 800 }),
-        }))}
+        navItems={headerNavItems}
         ctaLabel={t('cta')}
         ctaOnClick={() => scrollToSection({ sectionId: "contact", offset: 80, duration: 800 })}
         selector={{
