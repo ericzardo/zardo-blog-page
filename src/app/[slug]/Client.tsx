@@ -32,14 +32,20 @@ export default function Client({ slug }: { slug: string }) {
   }));
 
   useEffect(() => {
-    const storedLang = localStorage.getItem("preferredLanguage");
-    if (storedLang && storedLang !== i18n.language) {
-      switchLanguage(storedLang as "en" | "pt");
-      setLanguageReady(true)
-    } else {
+    try {
+      if (typeof window !== "undefined") {
+        const storedLang = localStorage.getItem("preferredLanguage");
+        if (storedLang && storedLang !== i18n.language) {
+          switchLanguage(storedLang as "en" | "pt");
+        }
+      }
+    } catch (err) {
+      console.warn("Erro ao acessar localStorage:", err);
+    } finally {
       setLanguageReady(true);
     }
   }, [i18n.language]);
+  
   
   useEffect(() => {
     if (!languageReady) return;
