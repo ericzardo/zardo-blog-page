@@ -18,12 +18,14 @@ const iconMap = {
 };
 
 export default function Client({ slug }: { slug: string }) {
-  const [languageReady, setLanguageReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [post, setPost] = useState<Post | null>(null);
-  const scrollToSection = useScrollToSection();
 
-  const { t } = useTranslation('home');
-  const { i18n } = useTranslation();
+  const scrollToSection = useScrollToSection();
+  const { t, i18n } = useTranslation('home');
+  const pathname = usePathname();
+
+  const isBlogPage = pathname.startsWith('/blog');
 
   const NAV_ITEMS = t('nav', { returnObjects: true }) as { label: string; href: string }[];
   const rawSocial = t('social', { returnObjects: true }) as { platform: keyof typeof iconMap; url: string; label: string }[];
@@ -31,10 +33,6 @@ export default function Client({ slug }: { slug: string }) {
     ...item,
     icon: iconMap[item.platform],
   }));
-
-  const pathname = usePathname();
-
-  const isBlogPage = pathname.startsWith('/blog');
 
   const headerNavItems = NAV_ITEMS.map((nav) => {
     if (isBlogPage) {
@@ -51,40 +49,31 @@ export default function Client({ slug }: { slug: string }) {
   });
 
   useEffect(() => {
-    try {
-      if (typeof window !== "undefined") {
+    const init = async () => {
+      try {
         const storedLang = localStorage.getItem("preferredLanguage");
         if (storedLang && storedLang !== i18n.language) {
           switchLanguage(storedLang as "en" | "pt");
         }
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/posts?slug=${slug}&lang=${storedLang || i18n.language}`);
+        if (!res.ok) return setPost(null);
+        const data = await res.json();
+        setPost(data);
+      } catch (err) {
+        console.error("Erro ao carregar post:", err);
+      } finally {
+        setIsLoading(false); // fim do loading
       }
-    } catch (err) {
-      console.warn("Erro ao acessar localStorage:", err);
-    } finally {
-      setLanguageReady(true);
-    }
-  }, [i18n.language]);
-  
-  
-  useEffect(() => {
-    if (!languageReady) return;
-    
-    const fetchPost = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/posts?slug=${slug}&lang=${i18n.language}`);
-      if (!res.ok) return setPost(null);
-      setPost(await res.json());
     };
-  
-    fetchPost();
-  }, [slug, i18n.language, languageReady]);
-  
 
-  if (!post) {
-    return <LoadingScreen />
-  }
+    init();
+  }, [slug, i18n.language]);
 
+  if (isLoading || !post) return <LoadingScreen />;
+  
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-black"> {/* <- garante que o fundo não pisca */}
       <Header 
         navItems={headerNavItems}
         ctaLabel={t('cta')}
@@ -95,16 +84,11 @@ export default function Client({ slug }: { slug: string }) {
             { value: "pt", label: "Português", icon: "🇧🇷" },
             { value: "en", label: "English", icon: "🇺🇸" },
           ],
-          onSelect: (lang: string) => {
-            switchLanguage(lang as "en" | "pt");
-          }
+          onSelect: (lang: string) => switchLanguage(lang as "en" | "pt")
         }}
       />
       <PostRenderer {...post} authorLabel={t("hero.authorLabel")} dateLabel={t("hero.dateLabel")} />
-      <Slogan
-        title={t('slogan.title')}
-        description={t('slogan.description')}
-      />
+      <Slogan title={t('slogan.title')} description={t('slogan.description')} />
       <Footer
         email="contact@zardo.dev"
         socialLinks={SOCIAL_LINKS}
