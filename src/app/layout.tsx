@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 
 import { SmoothScroll } from "@/providers/SmoothScroll";
+import { LanguageSync } from "@/components/LanguageSync";
 
 import { Favicon, AppleTouchIcon, Logo32, Logo192, Logo512} from "@zardo/ui-kit/logos"
 
@@ -93,6 +94,7 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} antialiased overflow-hidden`}
       >
+        <LanguageSync />
         <SmoothScroll >
           {children}
         </SmoothScroll>

@@ -3,14 +3,14 @@ import Section from "./sections/Content";
 import ImageSection from "./sections/Image";
 
 import { Post } from "@/types/post"
-import { groupIntoSections } from "@/lib/sections";
+import { groupIntoSections } from "@/lib/utils/sections";
 
 interface PostRenderer extends Post {
   authorLabel: string;
   dateLabel: string;
 }
 
-export function PostRenderer({ title, banner, description, date, content, tags, author, authorLabel, dateLabel }: PostRenderer) {
+function PostRenderer({ title, banner, description, date, content, tags, author, authorLabel, dateLabel }: PostRenderer) {
   const sections = groupIntoSections(content);
 
   return (
@@ -44,3 +44,5 @@ export function PostRenderer({ title, banner, description, date, content, tags, 
     </article>
   )
 }
+
+export default PostRenderer

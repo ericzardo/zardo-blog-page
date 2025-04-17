@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getAllSlugs, getPostBySlug } from '@/lib/posts'
+import { getAllSlugs, getPostBySlug } from '@/lib/api/posts'
 import { Post } from '@/types/post'
 
 const DEFAULT_LOCALE = 'en'

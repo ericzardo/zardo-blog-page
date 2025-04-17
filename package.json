@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
     "@zardo/ui-kit": "^2.0.31",
     "gsap": "^3.12.7",
     "i18n": "^0.15.1",

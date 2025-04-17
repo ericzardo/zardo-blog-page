@@ -2,9 +2,9 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Client from "./Client";
-import { getPostBySlug } from "@/lib/posts";
 import { metadata } from "@/lib/metadata";
 import { cookies } from "next/headers";
+import { getPostBySlug } from "@/lib/api/posts";
 
 export const dynamic = 'force-dynamic';
 
@@ -12,23 +12,24 @@ export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
   const { slug } = await params;
+  const store = await cookies();
   
-  const cookieStore = await cookies();
-  const locale = cookieStore.get('preferredLanguage')?.value || 'en';
+  const lang = store.get('preferredLanguage')?.value || 'en';
+  const post = await getPostBySlug(slug, lang);
 
-  try {
-    const post = await getPostBySlug(slug, locale);
-    if (!post) notFound();
-    return metadata(post);
-  } catch {
-    notFound();
-  }
+  if (!post) notFound();
+
+  return metadata(post);
 }
 
-export default async function Page(
-  { params }: { params: Promise<{ slug: string }> }
-) {
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const store = await cookies();
 
-  return <Client slug={slug} />;
+  const lang = store.get('preferredLanguage')?.value || "en"
+  const post = await getPostBySlug(slug, lang);
+
+  if (!post) notFound();
+
+  return <Client initialPost={post} slug={slug} />;
 }

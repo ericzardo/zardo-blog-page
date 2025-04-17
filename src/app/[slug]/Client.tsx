@@ -1,79 +1,86 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useEffect, useState, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
-import { switchLanguage } from '@/lib/translate';
 import { useScrollToSection } from '@/hooks/useScrollToSection';
 import { Post } from '@/types/post';
-
-import { Header, Slogan, Footer } from '@zardo/ui-kit/layout';
 import { LoadingScreen } from '@zardo/ui-kit/feedback';
-import { PostRenderer } from '@/components/PostRenderer';
 import { Linkedin, Instagram } from 'lucide-react';
+import { getPostBySlug } from '@/lib/api/posts';
+import switchLanguage from '@/lib/translate/service/switch';
+
+const PostRenderer = lazy(() => import('@/components/PostRenderer'));
+const Slogan = lazy(() => import('@zardo/ui-kit/layout').then(module => ({ default: module.Slogan })));
+const Footer = lazy(() => import('@zardo/ui-kit/layout').then(module => ({ default: module.Footer })));
+const Header = lazy(() => import('@zardo/ui-kit/layout').then(module => ({ default: module.Header })));
 
 const iconMap = {
   instagram: <Instagram strokeWidth={2} className="size-6 text-white/60" />,
   linkedin: <Linkedin strokeWidth={2} className="size-6 text-white/60" />,
 };
 
-export default function Client({ slug }: { slug: string }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [post, setPost] = useState<Post | null>(null);
+type ClientProps = {
+  initialPost: Post | null;
+  slug: string;
+};
 
-  const scrollToSection = useScrollToSection();
+export default function Client({ initialPost, slug }: ClientProps) {
   const { t, i18n } = useTranslation('home');
-  const pathname = usePathname();
+  const scrollToSection = useScrollToSection();
 
-  const isBlogPage = pathname.startsWith('/blog');
-
-  const NAV_ITEMS = t('nav', { returnObjects: true }) as { label: string; href: string }[];
-  const rawSocial = t('social', { returnObjects: true }) as { platform: keyof typeof iconMap; url: string; label: string }[];
-  const SOCIAL_LINKS = rawSocial.map((item) => ({
-    ...item,
-    icon: iconMap[item.platform],
-  }));
-
-  const headerNavItems = NAV_ITEMS.map((nav) => {
-    if (isBlogPage) {
-      return {
-        ...nav,
-        href: `https://zardo.dev/#${nav.href}`
-      };
-    } else {
-      return {
-        ...nav,
-        onClick: () => scrollToSection({ sectionId: nav.href, offset: 80, duration: 800 })
-      };
-    }
-  });
+  const [isBlogPage, setIsBlogPage] = useState(false);
+  const [post, setPost] = useState<Post | null>(initialPost);
+  const [loading, setLoading] = useState(!initialPost);
+  const [isLangReady, setLangReady] = useState(false);
 
   useEffect(() => {
-    const init = async () => {
-      try {
-        const storedLang = localStorage.getItem("preferredLanguage");
-        if (storedLang && storedLang !== i18n.language) {
-          switchLanguage(storedLang as "en" | "pt");
-        }
+    if (typeof window !== 'undefined') {
+      setIsBlogPage(window.location.pathname.startsWith('/blog'));
+    }
+  }, []);
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/posts?slug=${slug}&lang=${storedLang || i18n.language}`);
-        if (!res.ok) return setPost(null);
-        const data = await res.json();
+  useEffect(() => {
+    if (i18n.language !== 'pt' && i18n.language !== 'en') {
+      setLangReady(false);
+    } else {
+      setLangReady(true); 
+    }
+  }, [i18n.language]);
+
+  useEffect(() => {
+    if (slug) {
+      setLoading(true);
+      getPostBySlug(slug, i18n.language).then((data) => {
         setPost(data);
-      } catch (err) {
-        console.error("Erro ao carregar post:", err);
-      } finally {
-        setIsLoading(false); // fim do loading
-      }
-    };
+        setLoading(false);
+      });
+    }
+  }, [i18n.language, slug]);
 
-    init();
-  }, [slug, i18n.language]);
+  useEffect(() => {
+    if (!initialPost) {
+      setLoading(true);
+      getPostBySlug(slug, i18n.language).then((data) => {
+        setPost(data);
+        setLoading(false);
+      });
+    }
+  }, [slug, i18n.language, initialPost]);
 
-  if (isLoading || !post) return <LoadingScreen />;
-  
+  if (loading || !post || !isLangReady) return <LoadingScreen />;
+
+  const NAV_ITEMS = t('nav', { returnObjects: true }) as { label: string; href: string }[];
+  const SOCIAL_LINKS = (t('social', { returnObjects: true }) as { platform: keyof typeof iconMap; url: string; label: string }[] || [])
+    .map((item) => ({ ...item, icon: iconMap[item.platform] }));
+
+  const headerNavItems = NAV_ITEMS.map((nav) =>
+    isBlogPage
+      ? { ...nav, href: `https://zardo.dev/#${nav.href}` }
+      : { ...nav, onClick: () => scrollToSection({ sectionId: nav.href, offset: 80, duration: 800 }) }
+  );
+
   return (
-    <main className="min-h-screen bg-black"> {/* <- garante que o fundo não pisca */}
+    <main className="min-h-screen bg-brand-offwhite">
       <Header 
         navItems={headerNavItems}
         ctaLabel={t('cta')}
@@ -84,7 +91,7 @@ export default function Client({ slug }: { slug: string }) {
             { value: "pt", label: "Português", icon: "🇧🇷" },
             { value: "en", label: "English", icon: "🇺🇸" },
           ],
-          onSelect: (lang: string) => switchLanguage(lang as "en" | "pt")
+          onSelect: (lang: string) => switchLanguage(lang as "en" | "pt"),
         }}
       />
       <PostRenderer {...post} authorLabel={t("hero.authorLabel")} dateLabel={t("hero.dateLabel")} />
@@ -96,5 +103,5 @@ export default function Client({ slug }: { slug: string }) {
         backToTopLabel={t("footer.backToTop")}
       />
     </main>
-  )
+  );
 }

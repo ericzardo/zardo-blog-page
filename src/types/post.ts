@@ -14,3 +14,13 @@ export interface Post {
   content: Content[];
   author: string;
 }
+
+export interface PostTranslationWithCanonical extends Post {
+  id: string;
+  lang: string;
+  localized_slug: string;
+  post_id: string;
+  posts: {
+    slug: string;
+  };
+}

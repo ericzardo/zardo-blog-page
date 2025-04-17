@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRef, useEffect } from "react";
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import i18n from "@/lib/translate/config";
+import { format } from "@/lib/utils/dates";
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -36,6 +38,7 @@ const Hero = ({ title, description, banner, tags, date, author, authorLabel, dat
     }
   }, [])
 
+  const formattedDate = format(date, i18n.language as 'pt' | 'en')
 
   return (
     <section 
@@ -61,7 +64,7 @@ const Hero = ({ title, description, banner, tags, date, author, authorLabel, dat
               <div className="flex flex-col flex-1 gap-2 p-4 rounded-lg bg-brand-navy/50 border border-brand-lavender/10">
                 <p className="text-sm text-brand-lavender/85">{dateLabel}</p>
                 <p className="text-brand-lavender font-medium">
-                  {date}
+                  {formattedDate}
                 </p>
               </div>
 
