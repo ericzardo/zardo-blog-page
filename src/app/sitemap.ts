@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 import { getAllSlugs, getPostBySlug } from '@/lib/api/posts'
-import { Post } from '@/types/post'
+import { PostTranslationWithCanonical } from '@/types/post'
 
 const DEFAULT_LOCALE = 'en'
 
@@ -14,7 +14,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     slugs.map((slug) => getPostBySlug(slug, DEFAULT_LOCALE))
   )
 
-  const posts: Post[] = results.filter((post): post is Post => post !== null)
+  const posts = results.filter(
+    (post): post is PostTranslationWithCanonical => post !== null
+  );
 
   const staticRoutes = [
     '',
