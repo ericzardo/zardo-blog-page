@@ -41,5 +41,9 @@
     "authorLabel": "Author",
     "dateLabel": "Date"
   },
-  "loading": "Loading post..."
+  "loading": "Loading post...",
+  "consultancy": {
+    "slug": "free-booking",
+    "labelText": "Book with me"
+  }
 }

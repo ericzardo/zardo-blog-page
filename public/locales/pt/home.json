@@ -41,5 +41,9 @@
     "authorLabel": "Autor",
     "dateLabel": "Data"
   },
-  "loading": "Carregando post..."
+  "loading": "Carregando post...",
+  "consultancy": {
+    "slug": "consultoria-gratuita",
+    "labelText": "Agendar Consulta"
+  }
 }
