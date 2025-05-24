@@ -3,7 +3,6 @@
 import { useEffect, useState, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useScrollToSection } from '@/hooks/useScrollToSection';
-import ConsultancyButton from "@/components/ConsultancyButton";
 import { Post } from '@/types/post';
 import { LoadingScreen } from '@zardo/ui-kit/feedback';
 import { Linkedin, Instagram } from 'lucide-react';
@@ -82,11 +81,10 @@ export default function Client({ initialPost, slug }: ClientProps) {
 
   return (
     <main className="min-h-screen bg-brand-offwhite">
-      <ConsultancyButton />
       <Header 
         navItems={headerNavItems}
         ctaLabel={t('cta')}
-        ctaOnClick={() => scrollToSection({ sectionId: "contact", offset: 80, duration: 800 })}
+        ctaOnClick={() => window.location.href = "/booking"}
         selector={{
           current: i18n.language,
           options: [
